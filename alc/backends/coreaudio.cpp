@@ -44,12 +44,21 @@
 
 #include <AudioUnit/AudioUnit.h>
 #include <AudioToolbox/AudioToolbox.h>
+#include <AvailabilityMacros.h>
 
 #if TARGET_OS_IOS || TARGET_OS_TV
 #define CAN_ENUMERATE 0
 #else
 #include <IOKit/audio/IOAudioTypes.h>
 #define CAN_ENUMERATE 1
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 1060
+#define AudioComponent Component
+#define AudioComponentDescription ComponentDescription
+#define AudioComponentFindNext FindNextComponent
+#define AudioComponentInstanceDispose CloseComponent
+#define AudioComponentInstanceNew OpenAComponent
 #endif
 
 namespace {
